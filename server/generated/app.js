@@ -266,7 +266,12 @@ module.exports =
 	        key: 'handleKeyPress',
 	        value: function handleKeyPress(ev) {
 	            if (ev.which === 13) {
-	                this.props.onSubmit();
+	                var trimmedMessage = this.props.value.trim();
+
+	                if (trimmedMessage) {
+	                    this.props.onSubmit(trimmedMessage);
+	                }
+
 	                ev.preventDefault();
 	            }
 	        }
@@ -288,15 +293,21 @@ module.exports =
 	});
 	exports.updateMessage = updateMessage;
 	exports.addMessage = addMessage;
+	exports.addResponse = addResponse;
 	var UPDATE_MESSAGE = exports.UPDATE_MESSAGE = 'update-message';
 	var ADD_MESSAGE = exports.ADD_MESSAGE = 'add-message';
+	var ADD_RESPONSE = exports.ADD_RESPONSE = 'add-response';
 
 	function updateMessage(message) {
 	    return { type: UPDATE_MESSAGE, message: message };
 	}
 
-	function addMessage() {
-	    return { type: ADD_MESSAGE };
+	function addMessage(message) {
+	    return { type: ADD_MESSAGE, message: message };
+	}
+
+	function addResponse(message) {
+	    return { type: ADD_RESPONSE, message: message };
 	}
 
 /***/ }
